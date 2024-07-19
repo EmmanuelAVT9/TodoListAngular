@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { Task } from 'src/app/models/task.model';
 import { TaskService } from 'src/app/services/task.service';
 
@@ -10,6 +10,10 @@ import { TaskService } from 'src/app/services/task.service';
 export class TaskComponent implements OnInit {
   tasks: Task[] = [];
   searchResults: Task[] = [];
+
+  @ViewChild('title') titleInput!: ElementRef;
+  @ViewChild('author') authorInput!: ElementRef;
+  @ViewChild('content') contentInput!: ElementRef;
 
   constructor(private taskService: TaskService) { }
 
@@ -27,6 +31,11 @@ export class TaskComponent implements OnInit {
     };
     this.taskService.addTask(newTask);
     this.tasks = this.taskService.getTasks();
+
+     // Limpiar los campos de entrada
+     this.titleInput.nativeElement.value = '';
+     this.authorInput.nativeElement.value = '';
+     this.contentInput.nativeElement.value = '';
   }
   deleteTask(taskId: string): void {
     this.taskService.deleteTask(taskId);

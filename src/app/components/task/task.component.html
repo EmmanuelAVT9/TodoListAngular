@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container p-4">
     <input type="search" class="form-control" #searchQuery placeholder="🔍Buscar tareas"
         (input)="searchTasks(searchQuery.value)" />
 </div>
@@ -27,32 +27,43 @@
 </div>
 <div class="container">
     <h2 class="text-center" *ngIf="tasks.length === 0">No hay tareas hasta el momento 😥</h2>
-    <div *ngFor="let task of tasks" class="card" style="width: 18rem;">
-        <div class="card-body">
-            <button type="button" class="btn-close position-absolute top-0 end-0 p-3" aria-label="Close"></button>
-            <h5 class="card-title">{{ task.title}}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-            <p class="card-text"><b>Autor:</b> {{ task.author }} - <b>Fecha:</b> {{ task.createdAt | date }}</p>
-            <button class="btn btn-danger" (click)="deleteTask(task.id)">Eliminar</button>
-            <button class="btn btn-info" (click)="updateTask(updateTaskTitle(task, 'Nuevo Título'))">Actualizar
-                Tarea</button>
+    <div class="col-12 col-sm-6">
+        <div *ngFor="let task of tasks" class="card" style="width: auto;">
+            <div class="card-body">
+                <button type="button" class="btn-close position-absolute top-0 end-0 p-3" aria-label="Close"
+                    (click)="deleteTask(task.id)"></button>
+                <h5 class="card-title">{{ task.title}}</h5>
+                <p class="card-text"><b>Autor:</b> {{ task.author }} - <b>Fecha:</b> {{ task.createdAt | date }}</p>
+                <div class="d-flex justify-content-between">
+                    <button class="btn btn-danger" (click)="deleteTask(task.id)">Eliminar</button>
+                    <button class="btn btn-info" (click)="updateTask(updateTaskTitle(task, 'Nuevo Título'))">Actualizar
+                        Tarea</button>
+                </div>
+            </div>
         </div>
     </div>
+
 </div>
 
 <div class="container">
     <div *ngIf="searchResults.length > 0">
         <h3>Resultados de búsqueda:</h3>
-        <div *ngFor="let task of searchResults" class="card" style="width: 18rem;">
-            <div class="card-body">
-                <button type="button" class="btn-close position-absolute top-0 end-0 p-3" aria-label="Close"></button>
-                <h5 class="card-title">{{ task.title}}</h5>
-                <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                <p class="card-text">{{ task.author }} - {{ task.createdAt | date }}</p>
-                <button class="btn btn-danger" (click)="deleteTask(task.id)">Eliminar</button>
-                <button class="btn btn-info" (click)="updateTask(updateTaskTitle(task, 'Nuevo Título'))">Actualizar
-                    Tarea</button>
+        <div class="col-12 col-sm-6">
+            <div *ngFor="let task of searchResults" class="card" style="width: auto;">
+                <div class="card-body">
+                    <button type="button" class="btn-close position-absolute top-0 end-0 p-3"
+                        aria-label="Close"></button>
+                    <h5 class="card-title">{{ task.title}}</h5>
+                    <p class="card-text">{{ task.author }} - {{ task.createdAt | date }}</p>
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-danger" (click)="deleteTask(task.id)">Eliminar</button>
+                        <button class="btn btn-info"
+                            (click)="updateTask(updateTaskTitle(task, 'Nuevo Título'))">Actualizar
+                            Tarea</button>
+                    </div>
+                </div>
             </div>
         </div>
+
     </div>
 </div>
