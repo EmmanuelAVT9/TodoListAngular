@@ -23,4 +23,25 @@ export class TaskService {
     tasks.push(task);
     this.saveTasks(tasks);
   }
+
+  deleteTask(taskId: string): void {
+    let tasks = this.getTasks();
+    tasks = tasks.filter(task => task.id !== taskId);
+    this.saveTasks(tasks);
+  }
+
+  updateTask(updatedTask: Task): void {
+    let tasks = this.getTasks();
+    tasks = tasks.map(task => task.id === updatedTask.id ? updatedTask : task);
+    this.saveTasks(tasks);
+  }
+
+  searchTasks(query: string): Task[] {
+    const tasks = this.getTasks();
+    return tasks.filter(task => 
+      task.title.toLowerCase().includes(query.toLowerCase()) ||
+      task.author.toLowerCase().includes(query.toLowerCase()) ||
+      task.content.toLowerCase().includes(query.toLowerCase())
+    );
+  }
 }

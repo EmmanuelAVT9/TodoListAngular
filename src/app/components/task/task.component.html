@@ -1,17 +1,58 @@
-<p>task works!</p>
-<div *ngFor="let task of tasks" class="card">
-    <div class="card-header">
-        <h3>{{ task.title }}</h3>
-        <small>{{ task.author }} - {{ task.createdAt | date }}</small>
+<div class="container">
+    <h1 class="text-center">Bienvenido a TodoTaskFAST</h1>
+</div>
+<div class="container border p-3">
+    <div class="mb-3">
+        <input class="form-control " #title placeholder="Título de la Tarea" />
     </div>
-    <div class="card-body">
-        <p>{{ task.content }}</p>
+    <div class="mb-3">
+        <input class="form-control" #author placeholder="Encargado" />
+    </div>
+    <div class="mb-3">
+        <textarea class="form-control" #content placeholder="Descripción de la tarea"></textarea>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-success" (click)="addTask(title.value, author.value, content.value)">Agregar
+            Tarea </button>
     </div>
 </div>
 
-<div>
-    <input #title placeholder="Título" />
-    <input #author placeholder="Autor" />
-    <textarea #content placeholder="Contenido"></textarea>
-    <button (click)="addTask(title.value, author.value, content.value)">Agregar Tarea</button>
+<div class="container">
+    <input type="search" class="form-control" #searchQuery placeholder="🔍Buscar tareas"
+        (input)="searchTasks(searchQuery.value)" />
+</div>
+
+<div class="container p-3">
+    <h1>Tareas por realizar hoy ✅🗒️</h1>
+</div>
+<div class="container">
+    <h2 class="text-center" *ngIf="tasks.length === 0">No hay tareas hasta el momento 😥</h2>
+    <div *ngFor="let task of tasks" class="card" style="width: 18rem;">
+        <div class="card-body">
+            <button type="button" class="btn-close position-absolute top-0 end-0 p-3" aria-label="Close"></button>
+            <h5 class="card-title">{{ task.title}}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+            <p class="card-text"><b>Autor:</b> {{ task.author }} - <b>Fecha:</b> {{ task.createdAt | date }}</p>
+            <button class="btn btn-danger" (click)="deleteTask(task.id)">Eliminar</button>
+            <button class="btn btn-info" (click)="updateTask(updateTaskTitle(task, 'Nuevo Título'))">Actualizar
+                Tarea</button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div *ngIf="searchResults.length > 0">
+        <h3>Resultados de búsqueda:</h3>
+        <div *ngFor="let task of searchResults" class="card" style="width: 18rem;">
+            <div class="card-body">
+                <button type="button" class="btn-close position-absolute top-0 end-0 p-3" aria-label="Close"></button>
+                <h5 class="card-title">{{ task.title}}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+                <p class="card-text">{{ task.author }} - {{ task.createdAt | date }}</p>
+                <button class="btn btn-danger" (click)="deleteTask(task.id)">Eliminar</button>
+                <button class="btn btn-info" (click)="updateTask(updateTaskTitle(task, 'Nuevo Título'))">Actualizar
+                    Tarea</button>
+            </div>
+        </div>
+    </div>
 </div>

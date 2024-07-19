@@ -9,6 +9,7 @@ import { TaskService } from 'src/app/services/task.service';
 })
 export class TaskComponent implements OnInit {
   tasks: Task[] = [];
+  searchResults: Task[] = [];
 
   constructor(private taskService: TaskService) { }
 
@@ -26,5 +27,22 @@ export class TaskComponent implements OnInit {
     };
     this.taskService.addTask(newTask);
     this.tasks = this.taskService.getTasks();
+  }
+  deleteTask(taskId: string): void {
+    this.taskService.deleteTask(taskId);
+    this.tasks = this.taskService.getTasks();
+  }
+
+  updateTask(updatedTask: Task): void {
+    this.taskService.updateTask(updatedTask);
+    this.tasks = this.taskService.getTasks();
+  }
+
+  updateTaskTitle(task: any, newTitle: string) {
+    return { ...task, title: newTitle };
+  }
+  
+  searchTasks(query: string): void {
+    this.searchResults = this.taskService.searchTasks(query);
   }
 }
