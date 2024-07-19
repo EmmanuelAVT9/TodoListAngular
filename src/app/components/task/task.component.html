@@ -1,0 +1,17 @@
+<p>task works!</p>
+<div *ngFor="let task of tasks" class="card">
+    <div class="card-header">
+        <h3>{{ task.title }}</h3>
+        <small>{{ task.author }} - {{ task.createdAt | date }}</small>
+    </div>
+    <div class="card-body">
+        <p>{{ task.content }}</p>
+    </div>
+</div>
+
+<div>
+    <input #title placeholder="Título" />
+    <input #author placeholder="Autor" />
+    <textarea #content placeholder="Contenido"></textarea>
+    <button (click)="addTask(title.value, author.value, content.value)">Agregar Tarea</button>
+</div>
